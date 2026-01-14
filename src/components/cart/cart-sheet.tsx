@@ -13,7 +13,6 @@ const CartSheet = () => {
     return null;
   }
 
-  if (!isCartOpen) return null;
   return (
     <>
       {/* Overlay */}{" "}
