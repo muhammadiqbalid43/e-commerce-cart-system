@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import Providers from "./providers";
 import CartSheet from "@/components/cart/cart-sheet";
+import { StoreProvider } from "@/lib/stores/store-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
             <Header />
             <CartSheet />
             <main className="flex-1 container mx-auto px-4 py-8">
-              {children}
+              <StoreProvider>{children}</StoreProvider>
             </main>
             <footer className="border-t py-6">
               <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
