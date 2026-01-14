@@ -3,9 +3,15 @@
 import { useCartStore } from "@/lib/stores/cart";
 import { X } from "lucide-react";
 import CartItem from "./cart-item";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 
 const CartSheet = () => {
+  const isMounted = useIsMounted();
   const { isCartOpen, closeCart, items, getSubtotal } = useCartStore();
+
+  if (!isMounted) {
+    return null;
+  }
 
   if (!isCartOpen) return null;
   return (
