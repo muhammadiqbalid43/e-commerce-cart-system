@@ -7,8 +7,14 @@ import { Badge } from "../ui/badge";
 
 const CartButton = () => {
   const totalItems = useCartStore((state) => state.getTotalItems());
+  const openCart = useCartStore((state) => state.openCart);
   return (
-    <Button variant="outline" size="icon" className="relative">
+    <Button
+      variant="outline"
+      size="icon"
+      className="relative"
+      onClick={openCart}
+    >
       <ShoppingCart className="h-5 w-5" />
       {totalItems > 0 && (
         <Badge
