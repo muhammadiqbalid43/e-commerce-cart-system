@@ -4,6 +4,7 @@ import { useCartStore } from "@/lib/stores/cart";
 import { X } from "lucide-react";
 import CartItem from "./cart-item";
 import { useIsMounted } from "@/hooks/use-is-mounted";
+import Link from "next/link";
 
 const CartSheet = () => {
   const isMounted = useIsMounted();
@@ -73,9 +74,11 @@ const CartSheet = () => {
                 </span>
               </div>
             </div>
-            <button className="w-full bg-black text-white py-3 rounded-lg font-medium">
-              Checkout
-            </button>
+            <Link href="/checkout/cart" onClick={closeCart}>
+              <button className="w-full bg-black text-white py-3 rounded-lg font-medium">
+                Checkout
+              </button>
+            </Link>
           </div>
         </div>
       </div>
