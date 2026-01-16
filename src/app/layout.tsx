@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/header";
 import Providers from "./providers";
 import CartSheet from "@/components/cart/cart-sheet";
 import { StoreProvider } from "@/lib/stores/store-provider";
+import ConditionalLayout from "@/components/layout/conditional-layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,16 +23,12 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <Providers>
           <div className="min-h-screen flex flex-col">
-            <Header />
-            <CartSheet />
-            <main className="flex-1 container mx-auto px-4 py-8">
-              <StoreProvider>{children}</StoreProvider>
-            </main>
-            <footer className="border-t py-6">
-              <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-                © 2025 StyleCart. All rights reserved.
-              </div>
-            </footer>
+            <ConditionalLayout>
+              <CartSheet />
+              <main className="flex-1 container mx-auto px-4 py-8">
+                <StoreProvider>{children}</StoreProvider>
+              </main>
+            </ConditionalLayout>
           </div>
         </Providers>
       </body>
