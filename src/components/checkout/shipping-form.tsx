@@ -1,5 +1,6 @@
 "use client";
 
+import { useCheckoutStore } from "@/lib/stores/checkout";
 import {
   ShippingFormData,
   shippingFormSchema,
@@ -21,6 +22,8 @@ const countries = [
 const ShippingForm = () => {
   const router = useRouter();
 
+  const { shippingData, setShippingData } = useCheckoutStore();
+
   const {
     register,
     handleSubmit,
@@ -29,13 +32,14 @@ const ShippingForm = () => {
   } = useForm<ShippingFormData>({
     resolver: zodResolver(shippingFormSchema),
     mode: "onTouched",
-    defaultValues: {},
+    defaultValues: shippingData || {},
   });
 
   const onSubmit = async (data: ShippingFormData) => {
     console.log("Form data:", data);
+    setShippingData(data);
     // Save to localStorage or store
-    localStorage.setItem("shipping-data", JSON.stringify(data));
+    localStorage.setItem("shipping-form-data", JSON.stringify(data));
     router.push("/checkout/confirm");
   };
   return (
