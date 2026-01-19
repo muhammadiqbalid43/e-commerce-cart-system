@@ -62,7 +62,13 @@ export const useCartStore = create<CartStore>()(
         });
       },
 
-      clearCart: () => set({ items: [] }),
+      clearCart: () => {
+        set({ items: [] });
+        // Juga clear localStorage untuk cart
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("cart-storage");
+        }
+      },
 
       getTotalItems: () => {
         return get().items.reduce((total, item) => total + item.quantity, 0);
