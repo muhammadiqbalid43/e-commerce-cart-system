@@ -5,7 +5,8 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 
 const CartItem = ({ item }: { item: CartItemType }) => {
-  const { updateQuantity, removeItem } = useCartStore();
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeItem = useCartStore((state) => state.removeItem);
   return (
     <div className="flex gap-4 py-4 border-b">
       {/* Product Image */}
