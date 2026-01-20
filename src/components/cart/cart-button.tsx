@@ -1,12 +1,12 @@
 "use client";
 
-import { useCartStore } from "@/lib/stores/cart";
+import { selectTotalItems, useCartStore } from "@/lib/stores/cart";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 import { Badge } from "../ui/badge";
 
 const CartButton = () => {
-  const totalItems = useCartStore((state) => state.getTotalItems());
+  const totalItems = useCartStore(selectTotalItems);
   const openCart = useCartStore((state) => state.openCart);
   return (
     <Button
