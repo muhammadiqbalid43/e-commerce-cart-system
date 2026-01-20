@@ -5,6 +5,7 @@ import Providers from "./providers";
 import CartSheet from "@/components/cart/cart-sheet";
 import { StoreProvider } from "@/lib/stores/store-provider";
 import ConditionalLayout from "@/components/layout/conditional-layout";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
               <CartSheet />
               <main className="flex-1 container mx-auto px-4 py-8">
                 <StoreProvider>{children}</StoreProvider>
+                <Toaster />
               </main>
             </ConditionalLayout>
           </div>
