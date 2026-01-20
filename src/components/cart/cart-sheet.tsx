@@ -1,14 +1,32 @@
 "use client";
 
-import { useCartStore } from "@/lib/stores/cart";
+import { selectSubtotal, useCartStore } from "@/lib/stores/cart";
 import { X } from "lucide-react";
 import CartItem from "./cart-item";
 import { useIsMounted } from "@/hooks/use-is-mounted";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const CartSheet = () => {
   const isMounted = useIsMounted();
-  const { isCartOpen, closeCart, items, getSubtotal } = useCartStore();
+  const { isCartOpen, closeCart, items, subtotal } = useCartStore((state) => ({
+    isCartOpen: state.isCartOpen,
+    closeCart: state.closeCart,
+    items: state.items,
+    subtotal: selectSubtotal(state),
+  }));
+
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isCartOpen]);
 
   if (!isMounted) {
     return null;
@@ -69,15 +87,15 @@ const CartSheet = () => {
             <div className="space-y-2 mb-4">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span className="font-semibold">
-                  ${getSubtotal().toFixed(2)}
-                </span>
+                <span className="font-semibold">${subtotal.toFixed(2)}</span>
               </div>
             </div>
-            <Link href="/checkout/cart" onClick={closeCart}>
-              <button className="w-full bg-black text-white py-3 rounded-lg font-medium">
-                Checkout
-              </button>
+            <Link
+              href="/checkout/cart"
+              onClick={closeCart}
+              className="block w-full bg-black text-white py-3 rounded-lg font-medium text-center"
+            >
+              Checkout
             </Link>
           </div>
         </div>
