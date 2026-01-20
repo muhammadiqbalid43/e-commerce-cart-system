@@ -71,17 +71,6 @@ export const useCartStore = create<CartState & CartActions>()(
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
       toggleCart: () => set((state) => ({ isCartOpen: !state.isCartOpen })),
-
-      getTotalItems: () => {
-        return get().items.reduce((total, item) => total + item.quantity, 0);
-      },
-
-      getSubtotal: () => {
-        return get().items.reduce(
-          (total, item) => total + item.price * item.quantity,
-          0
-        );
-      },
     }),
     {
       name: "cart-storage",
@@ -91,3 +80,9 @@ export const useCartStore = create<CartState & CartActions>()(
     }
   )
 );
+
+export const selectTotalItems = (state: CartState & CartActions) =>
+  state.items.reduce((total, item) => total + item.quantity, 0);
+
+export const selectSubtotal = (state: CartState & CartActions) =>
+  state.items.reduce((total, item) => total + item.price * item.quantity, 0);
