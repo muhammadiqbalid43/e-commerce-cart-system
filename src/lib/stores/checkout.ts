@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ShippingFormData } from "../validations/shipping";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface CheckoutStore {
   shippingData: ShippingFormData | null;
@@ -17,18 +17,9 @@ export const useCheckoutStore = create<CheckoutStore>()(
     }),
     {
       name: "checkout-storage",
-      storage: {
-        getItem: (name) => {
-          const item = localStorage.getItem(name);
-          return item ? JSON.parse(item) : null;
-        },
-        setItem: (name, value) => {
-          localStorage.setItem(name, JSON.stringify(value));
-        },
-        removeItem: (name) => {
-          localStorage.removeItem(name);
-        },
-      },
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ shippingData: state.shippingData }),
+      skipHydration: true,
     }
   )
 );
